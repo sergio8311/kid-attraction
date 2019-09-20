@@ -18,5 +18,10 @@ namespace Attraction
         {
             return int.Parse(ConfigurationManager.AppSettings["MaximumHeighForSwan"]);
         }
+
+        public static int GetAttractionsCost()
+        {
+            return int.Parse(ConfigurationManager.AppSettings["AttractionCost"]);
+        }
     }
 }

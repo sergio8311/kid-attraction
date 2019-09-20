@@ -7,44 +7,59 @@ namespace Attraction
     {
         static void Main(string[] args)
         {
-            Kid kid = new Kid();
-            int height;
-            Gender gender;
-            WeekDay weekDay;
-            Attractions attraction;
-
-            Console.WriteLine("Enter kid height in cm: ");
-            while (!int.TryParse(Console.ReadLine(), out height))
+            Kid kid = new Kid()
             {
-                Console.WriteLine("Height is not a number");
-            }
+                Gender = Gender.Male,
+                Height = 145,
+                LevelOfHappines = 100,
+                Money = 99,
+                Name = "John"
+            };
 
-            kid.Height = height;
+            AttractionManager manager = new AttractionManager(0);
 
-            Console.WriteLine("Choose Week Day (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday): ");
-            while (!Enum.TryParse(Console.ReadLine(), out weekDay))
-            {
-                Console.WriteLine("Enter Week Day in right format: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday");
-            }          
+            Park(manager, kid);
 
-            Console.WriteLine("Choose kid gender (Male, Female): ");
-            while (!Enum.TryParse(Console.ReadLine(), out gender))
-            {
-                Console.WriteLine("Uknown gender. Please choose one of: Male, Female");
-            }          
+            ShowKidAfterAttractionClosing(kid);
 
-            kid.Gender = gender;
+            //Kid kid = new Kid();
+            //int height;
+            //Gender gender;
+            //WeekDay weekDay;
+            //Attractions attraction;
 
-            Console.WriteLine("Enter Kid Name: ");
-            kid.Name = Console.ReadLine();
+            //Console.WriteLine("Enter kid height in cm: ");
+            //while (!int.TryParse(Console.ReadLine(), out height))
+            //{
+            //    Console.WriteLine("Height is not a number");
+            //}
 
-            Console.WriteLine("Which Attraction kid want to visit (Batman, Swan, Pony): ");
-            while (!Enum.TryParse(Console.ReadLine(), out attraction))
-            {
-                Console.WriteLine("Uknown Attraction name. Please choose one of: Batman, Swan, Pony.");
-            }
+            //kid.Height = height;
 
-            KidAllowedToAttractions(weekDay, kid, attraction);
+            //Console.WriteLine("Choose Week Day (Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday): ");
+            //while (!Enum.TryParse(Console.ReadLine(), out weekDay))
+            //{
+            //    Console.WriteLine("Enter Week Day in right format: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday");
+            //}          
+
+            //Console.WriteLine("Choose kid gender (Male, Female): ");
+            //while (!Enum.TryParse(Console.ReadLine(), out gender))
+            //{
+            //    Console.WriteLine("Uknown gender. Please choose one of: Male, Female");
+            //}          
+
+            //kid.Gender = gender;
+
+            //Console.WriteLine("Enter Kid Name: ");
+            //kid.Name = Console.ReadLine();
+
+            //Console.WriteLine("Which Attraction kid want to visit (Batman, Swan, Pony): ");
+            //while (!Enum.TryParse(Console.ReadLine(), out attraction))
+            //{
+            //    Console.WriteLine("Uknown Attraction name. Please choose one of: Batman, Swan, Pony.");
+            //}
+
+            //KidAllowedToAttractions(weekDay, kid, attraction);
 
             Console.ReadKey();
         }
@@ -97,7 +112,27 @@ namespace Attraction
             }
                 
             else
-                Console.WriteLine($"{kid.Name} is not allowed to {attractions} attraction");         
+                Console.WriteLine($"{kid.Name} is not allowed to {attractions} attraction");
         }
+
+        static void Park(AttractionManager manager, Kid kid)
+        {
+
+            while (manager.CheckCash())
+            {
+                bool isAllowed;
+                Console.WriteLine($"Is {kid.Name} allowed to ride (true, false)");
+                while (!bool.TryParse(Console.ReadLine(), out isAllowed))
+                    Console.WriteLine("Uknown format, pleas enter: true or false");
+
+                manager.IsKidAllowedToRide(isAllowed, kid);
+            }
+        }
+
+        static void ShowKidAfterAttractionClosing(Kid kid)
+        {
+            Console.WriteLine($"{kid.Name}  {kid.LevelOfHappines} {kid.Money}");
+        }
+
     }
 }
